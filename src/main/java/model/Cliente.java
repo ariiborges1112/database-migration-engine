@@ -7,8 +7,11 @@ public class Cliente{
     private String telefone;
 
     public Cliente(String nome, String cpf, String telefone){
+        validarNome(nome);
         this.nome = nome;
+        validarCpf(cpf);
         this.cpf = cpf;
+        validarTelefone(telefone);
         this.telefone = telefone;
     }
 
