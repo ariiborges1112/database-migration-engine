@@ -7,12 +7,18 @@ public class Cliente{
     private String telefone;
 
     public Cliente(String nome, String cpf, String telefone){
-        validarNome(nome);
-        this.nome = nome;
-        validarCpf(cpf);
-        this.cpf = cpf;
-        validarTelefone(telefone);
-        this.telefone = telefone;
+        this.setNome(nome);
+        this.setCpf(cpf);
+        this.setTelefone(telefone);
+    }
+
+    public Cliente(Integer id, String nome, String cpf, String telefone){
+        this(nome, cpf, telefone);
+        this.setId(id);
+    }
+
+    private void validarId(Integer id){
+        if(id < 1) throw new IllegalArgumentException("O ID não pode ser menor que 1!");
     }
 
     private void validarNome(String nome){
@@ -40,9 +46,8 @@ public class Cliente{
     }
 
     private void validarTelefone(String telefone){
-        if(telefone == null){
-            throw new IllegalArgumentException("O número de telefone não pode ser vazio!");
-        }
+        if(telefone == null) return;
+
         if(!telefone.matches("^\\(?[1-9]{2}\\)? ?(?:[2-8]|9[1-9])\\d{3}-?\\d{4}$")){
             throw new IllegalArgumentException("Formato de telefone inválido! Use o padrão (DD) 99999-9999 ou apenas números");
         }
@@ -56,6 +61,7 @@ public class Cliente{
     }
 
     public void setId(Integer id){
+        validarId(id);
         this.id = id;
     }
 
@@ -64,6 +70,7 @@ public class Cliente{
     }
 
     public void setNome(String nome){
+        validarNome(nome);
         this.nome = nome;
     }
 
@@ -72,6 +79,7 @@ public class Cliente{
     }
 
     public void setCpf(String cpf){
+        validarCpf(cpf);
         this.cpf = cpf;
     }
 
@@ -80,6 +88,7 @@ public class Cliente{
     }
 
     public void setTelefone(String telefone){
+        validarTelefone(telefone);
         this.telefone = telefone;
     }
 }
