@@ -60,7 +60,7 @@ public class Venda{
             throw new IllegalArgumentException("O cliente não pode ser nulo!");
         }
         if(cliente.getId() == null || cliente.getId() < 1){
-            throw new IllegalArgumentException("O ID deve existir e não pode ser menor ou igual a 0!");
+            throw new IllegalArgumentException("O ID deve existir e não pode ser menor que 1!");
         }
     }
 
