@@ -45,4 +45,27 @@ public class CategoriaDAO{
             throw new RuntimeException("Erro ao buscar todas as categoria", e);
         }
     }
+
+    public void updateCategoria(Categoria categoria){
+        String sql = "UPDATE categoria SET nome = ? WHERE id = ?";
+
+        try(PreparedStatement stmt = conexao.prepareStatement(sql)){
+            stmt.setString(1, categoria.getNome());
+            stmt.setInt(2, categoria.getId());
+            stmt.execute();
+        }catch(SQLException e){
+            throw new RuntimeException("Erro ao atualizar categoria", e);
+        }
+    }
+
+    public void deleteCategoria(Integer id){
+        String sql = "DELETE FROM categoria FROM id = ?";
+
+        try(PreparedStatement stmt = conexao.prepareStatement(sql)){
+            stmt.setInt(1, id);
+            stmt.execute();
+        }catch(SQLException e){
+            throw new RuntimeException("Erro ao deletar categoria", e);
+        }
+    }
 }
