@@ -85,7 +85,7 @@ public class Produto{
             throw new IllegalArgumentException("A categoria não pode ser nula!");
         }
         if(categoria.getId() == null || categoria.getId() < 1){
-            throw new IllegalArgumentException("O ID deve existir e não pode ser menor ou igual a 0!");
+            throw new IllegalArgumentException("O ID deve existir e não pode ser menor 1!");
         }
     }
 
