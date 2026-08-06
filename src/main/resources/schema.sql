@@ -2,14 +2,14 @@ create table cliente(
 	id integer primary key autoincrement,
 	nome text not null,
 	cpf text not null unique,
-	telefone text not null
+	telefone text
 )
 
 create table fornecedor(
 	id integer primary key autoincrement,
 	nome text not null,
-	cnpj text not null unique,
-	telefone text not null
+	cnpj text unique,
+	telefone text
 )
 
 create table categoria(
