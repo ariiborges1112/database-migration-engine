@@ -26,7 +26,7 @@ public class CategoriaDAO{
         }
     }
 
-    public List<Categoria> todasCategoria(){
+    public List<Categoria> todasCategorias(){
         String sql = "SELECT * FROM categoria";
 
         try(PreparedStatement stmt = conexao.prepareStatement(sql)){
