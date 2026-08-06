@@ -38,8 +38,8 @@ public class Venda{
     }
 
     private void validarFormaPagamento(String formaPagamento){
-        if(formaPagamento == null){
-            throw new IllegalArgumentException("A forma de pagamento não pode ser nulo!");
+        if(formaPagamento == null || formaPagamento.trim().isEmpty()){
+            throw new IllegalArgumentException("A forma de pagamento não pode ser vazio!");
         }
         if(formaPagamento.length() > 20){
             throw new IllegalArgumentException("A forma de pagamento não pode ter mais que 20 caracteres");
