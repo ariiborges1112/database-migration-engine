@@ -24,6 +24,9 @@ public class ItemVenda{
         }
     }
 
+    public ItemVenda(){
+    }
+
     private void validarProduto(Produto produto){
         if(produto == null){
             throw new IllegalArgumentException("O produto não pode ser nulo!");
