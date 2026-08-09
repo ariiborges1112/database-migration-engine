@@ -24,6 +24,9 @@ public class Venda{
         this.setDataVenda(dataVenda);
     }
 
+    public Venda(){
+    }
+
     private void validarId(Integer id){
         if(id < 1) throw new IllegalArgumentException("O ID não pode ser menor que 1!");
     }
