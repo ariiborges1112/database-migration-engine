@@ -28,6 +28,9 @@ public class Produto{
         this.setQuantidadeAtual(quantidadeAtual);
     }
 
+    public Produto(){
+    }
+
     private void validarId(Integer id){
         if(id < 1) throw new IllegalArgumentException("O ID não pode ser menor que 1!");
     }
