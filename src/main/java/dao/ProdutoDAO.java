@@ -65,17 +65,17 @@ public class ProdutoDAO{
     }
 
     public void updateProduto(Produto produto){
-        String sql = "UPDATE produto SET id = ?, nome = ?, preco_custo = ?, preco_venda = ?, " +
+        String sql = "UPDATE produto SET nome = ?, preco_custo = ?, preco_venda = ?, " +
                 "quantidade_atual = ?, estoque_minimo = ?, categoria_id = ? WHERE id = ?";
 
         try(PreparedStatement stmt = conexao.prepareStatement(sql)){
-            stmt.setInt(1, produto.getId());
-            stmt.setString(2, produto.getNome());
-            stmt.setBigDecimal(3, produto.getPrecoCusto());
-            stmt.setBigDecimal(4, produto.getPrecoVenda());
-            stmt.setInt(5, produto.getQuantidadeAtual());
-            stmt.setInt(6, produto.getEstoqueMinimo());
-            stmt.setInt(7, produto.getCategoria().getId());
+            stmt.setString(1, produto.getNome());
+            stmt.setBigDecimal(2, produto.getPrecoCusto());
+            stmt.setBigDecimal(3, produto.getPrecoVenda());
+            stmt.setInt(4, produto.getQuantidadeAtual());
+            stmt.setInt(5, produto.getEstoqueMinimo());
+            stmt.setInt(6, produto.getCategoria().getId());
+            stmt.setInt(7, produto.getId());
             stmt.execute();
         }catch(SQLException e){
             throw new RuntimeException("Erro ao atualizar produto", e);
