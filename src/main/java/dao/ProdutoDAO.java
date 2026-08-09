@@ -1,9 +1,13 @@
 package dao;
 
+import model.Categoria;
 import model.Produto;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProdutoDAO{
@@ -24,6 +28,7 @@ public class ProdutoDAO{
             stmt.setBigDecimal(3, produto.getPrecoVenda());
             stmt.setInt(4, produto.getQuantidadeAtual());
             stmt.setInt(5, produto.getEstoqueMinimo());
+            stmt.setInt(6, produto.getCategoria().getId());
             stmt.execute();
         }catch(SQLException e){
             throw new RuntimeException("Erro ao inserir produto", e);
@@ -31,11 +36,50 @@ public class ProdutoDAO{
     }
 
     public List<Produto> todosProdutos(){
+        String sql = "SELECT * FROM produto";
+        List<Produto> produtos = new ArrayList<>();
 
+        try(PreparedStatement stmt = conexao.prepareStatement(sql)){
+            ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()){
+                Integer id = rs.getInt("id");
+                String nome = rs.getString("nome");
+                BigDecimal precoCusto = rs.getBigDecimal("preco_custo");
+                BigDecimal precoVenda = rs.getBigDecimal("preco_venda");
+                Integer quantidadeAtual = rs.getInt("quantidade_atual");
+                Integer estoqueMinimo = rs.getInt("estoque_minimo");
+
+                Integer idCategoria = rs.getInt("categoria_id");
+                Categoria categoriaDoProduto = new Categoria();
+                categoriaDoProduto.setId(idCategoria);
+
+                Produto produtoConsulta = new Produto(id, nome, precoCusto, precoVenda,
+                        quantidadeAtual, estoqueMinimo, categoriaDoProduto);
+                produtos.add(produtoConsulta);
+            }
+            return produtos;
+        }catch(SQLException e){
+            throw new RuntimeException("Erro ao buscar todos os produtos", e);
+        }
     }
 
     public void updateProduto(Produto produto){
+        String sql = "UPDATE produto SET id = ?, nome = ?, preco_custo = ?, preco_venda = ?, " +
+                "quantidade_atual = ?, estoque_minimo = ?, categoria_id = ? WHERE id = ?";
 
+        try(PreparedStatement stmt = conexao.prepareStatement(sql)){
+            stmt.setInt(1, produto.getId());
+            stmt.setString(2, produto.getNome());
+            stmt.setBigDecimal(3, produto.getPrecoCusto());
+            stmt.setBigDecimal(4, produto.getPrecoVenda());
+            stmt.setInt(5, produto.getQuantidadeAtual());
+            stmt.setInt(6, produto.getEstoqueMinimo());
+            stmt.setInt(7, produto.getCategoria().getId());
+            stmt.execute();
+        }catch(SQLException e){
+            throw new RuntimeException("Erro ao atualizar produto", e);
+        }
     }
 
     public void deleteProduto(Integer id){
