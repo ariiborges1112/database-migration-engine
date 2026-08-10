@@ -1,9 +1,16 @@
 package dao;
 
+import model.Cliente;
 import model.Venda;
+
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class VendaDAO{
     private Connection conexao;
@@ -23,6 +30,33 @@ public class VendaDAO{
             stmt.execute();
         }catch(SQLException e){
             throw new RuntimeException("Erro ao inserir venda", e);
+        }
+    }
+
+    public List<Venda> todasVendas(){
+        String sql = "SELECT * FROM venda";
+        List<Venda> vendas = new ArrayList<>();
+
+        try(PreparedStatement stmt = conexao.prepareStatement(sql)){
+            ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()){
+                Integer id = rs.getInt("id");
+                LocalDateTime dataVenda = rs.getTimestamp("data_venda").toLocalDateTime();
+                String formaPagamento = rs.getString("forma_pagamento");
+                BigDecimal valorTotal = rs.getBigDecimal("valor_total");
+
+                Integer idCliente = rs.getInt("cliente_id");
+                Cliente clienteDaVenda = new Cliente();
+                clienteDaVenda.setId(idCliente);
+
+                Venda vendaConsulta = new Venda(id, dataVenda, formaPagamento,
+                        valorTotal, clienteDaVenda);
+                vendas.add(vendaConsulta);
+            }
+            return vendas;
+        }catch(SQLException e){
+            throw new RuntimeException("Erro ao buscar vendas", e);
         }
     }
 }
