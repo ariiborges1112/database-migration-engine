@@ -59,4 +59,19 @@ public class VendaDAO{
             throw new RuntimeException("Erro ao buscar vendas", e);
         }
     }
+
+    public void updateVenda(Venda venda){
+        String sql = "UPDATE venda SET forma_pagamento = ?, valor_total = ?, " +
+                "cliente_id = ? WHERE id = ?";
+
+        try(PreparedStatement stmt = conexao.prepareStatement(sql)){
+            stmt.setString(1, venda.getFormaPagamento());
+            stmt.setBigDecimal(2, venda.getValorTotal());
+            stmt.setInt(3,venda.getCliente().getId());
+            stmt.setInt(4,venda.getId());
+            stmt.execute();
+        }catch(SQLException e){
+            throw new RuntimeException("Erro ao atualizar venda", e);
+        }
+    }
 }
