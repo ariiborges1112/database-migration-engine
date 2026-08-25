@@ -79,4 +79,16 @@ public class ItemVendaDAO{
             throw new RuntimeException("Erro ao atualizar item vendido", e);
         }
     }
+
+    public void deleteItemVenda(Integer idVenda, Integer idProduto){
+        String sql = "DELETE FROM item_venda WHERE venda_id = ? AND produto_id = ?";
+
+        try(PreparedStatement stmt = conexao.prepareStatement(sql)){
+            stmt.setInt(1, idVenda);
+            stmt.setInt(2, idProduto);
+            stmt.execute();
+        }catch(SQLException e){
+            throw new RuntimeException("Erro ao deletar itens vendidos", e);
+        }
+    }
 }
