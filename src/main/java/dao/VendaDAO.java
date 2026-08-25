@@ -82,7 +82,7 @@ public class VendaDAO{
             stmt.setInt(1, id);
             stmt.execute();
         }catch(SQLException e){
-            throw new RuntimeException("Erro ao deletar venda");
+            throw new RuntimeException("Erro ao deletar venda", e);
         }
     }
 }
