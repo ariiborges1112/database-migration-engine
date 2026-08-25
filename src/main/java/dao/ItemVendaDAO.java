@@ -64,4 +64,19 @@ public class ItemVendaDAO{
             throw new RuntimeException("Erro ao buscar items vendidos", e);
         }
     }
+
+    public void updateItemVenda(ItemVenda itemVenda){
+        String sql = "UPDATE item_venda SET venda_id = ?, produto_id = ? " +
+                "WHERE quantidade_vendida = ? AND preco_unitario = ?";
+
+        try(PreparedStatement stmt = conexao.prepareStatement(sql)){
+            stmt.setInt(1, itemVenda.getVenda().getId());
+            stmt.setInt(2, itemVenda.getProduto().getId());
+            stmt.setInt(3, itemVenda.getQuantidadeVendida());
+            stmt.setBigDecimal(4, itemVenda.getPrecoUnitario());
+            stmt.execute();
+        }catch(SQLException e){
+            throw new RuntimeException("Erro ao atualizar item vendido", e);
+        }
+    }
 }
