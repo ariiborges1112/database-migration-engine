@@ -74,4 +74,15 @@ public class VendaDAO{
             throw new RuntimeException("Erro ao atualizar venda", e);
         }
     }
+
+    public void deleteVenda(Integer id){
+        String sql = "DELETE FROM venda WHERE id = ?";
+
+        try(PreparedStatement stmt = conexao.prepareStatement(sql)){
+            stmt.setInt(1, id);
+            stmt.execute();
+        }catch(SQLException e){
+            throw new RuntimeException("Erro ao deletar venda");
+        }
+    }
 }
