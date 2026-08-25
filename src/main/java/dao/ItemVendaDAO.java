@@ -70,10 +70,10 @@ public class ItemVendaDAO{
                 "WHERE venda_id = ? AND produto_id = ?";
 
         try(PreparedStatement stmt = conexao.prepareStatement(sql)){
-            stmt.setInt(1, itemVenda.getVenda().getId());
-            stmt.setInt(2, itemVenda.getProduto().getId());
-            stmt.setInt(3, itemVenda.getQuantidadeVendida());
-            stmt.setBigDecimal(4, itemVenda.getPrecoUnitario());
+            stmt.setInt(1, itemVenda.getQuantidadeVendida());
+            stmt.setBigDecimal(2, itemVenda.getPrecoUnitario());
+            stmt.setInt(3, itemVenda.getVenda().getId());
+            stmt.setInt(4, itemVenda.getProduto().getId());
             stmt.execute();
         }catch(SQLException e){
             throw new RuntimeException("Erro ao atualizar item vendido", e);
