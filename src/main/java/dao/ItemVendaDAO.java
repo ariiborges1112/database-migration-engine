@@ -1,9 +1,16 @@
 package dao;
 
 import model.ItemVenda;
+import model.Produto;
+import model.Venda;
+
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ItemVendaDAO{
     private Connection conexao;
@@ -24,6 +31,37 @@ public class ItemVendaDAO{
             stmt.execute();
         }catch(SQLException e){
             throw new RuntimeException("Erro ao inserir itens vendidos", e);
+        }
+    }
+
+    public List<ItemVenda> todosItensVendidos(){
+        String sql = "SELECT * FROM item_venda";
+        List<ItemVenda> itensVendidos = new ArrayList<>();
+
+        try(PreparedStatement stmt = conexao.prepareStatement(sql)){
+            ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()){
+                Integer idVenda = rs.getInt("venda_id");
+                Venda itemDaVenda = new Venda();
+                itemDaVenda.setId(idVenda);
+
+                Integer idProduto = rs.getInt("produto_id");
+                Produto produtoDaVenda = new Produto();
+                produtoDaVenda.setId(idProduto);
+
+                Integer quantidadeVenda = rs.getInt("quantidade_vendida");
+                BigDecimal precoUnitario = rs.getBigDecimal("preco_unitario");
+
+                ItemVenda itemVenda = new ItemVenda(itemDaVenda, produtoDaVenda,
+                        quantidadeVenda, precoUnitario);
+
+                itensVendidos.add(itemVenda);
+            }
+
+            return itensVendidos;
+        }catch(SQLException e){
+            throw new RuntimeException("Erro ao buscar items vendidos", e);
         }
     }
 }
