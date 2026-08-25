@@ -66,8 +66,8 @@ public class ItemVendaDAO{
     }
 
     public void updateItemVenda(ItemVenda itemVenda){
-        String sql = "UPDATE item_venda SET venda_id = ?, produto_id = ? " +
-                "WHERE quantidade_vendida = ? AND preco_unitario = ?";
+        String sql = "UPDATE item_venda SET quantidade_vendida = ?, preco_unitario = ? " +
+                "WHERE venda_id = ? AND produto_id = ?";
 
         try(PreparedStatement stmt = conexao.prepareStatement(sql)){
             stmt.setInt(1, itemVenda.getVenda().getId());
